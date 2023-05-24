@@ -86,12 +86,12 @@ amountOfPastEvents: The number of past events to retrieve. Use -1 to retrieve al
 
 The fetchEvents method returns a promise that resolves to an array of parsed calendar events. Each event object has the following properties:
 
-startDate: The start date of the event (in the Luxon DateTime format).
-endDate: The end date of the event (in the Luxon DateTime format).
-summary: The summary or title of the event.
-description: The description of the event.
-location: The location of the event.
-duration: The duration of the event.
+- startDate: The start date of the event (in the Luxon DateTime format).
+- endDate: The end date of the event (in the Luxon DateTime format).
+- summary: The summary or title of the event.
+- description: The description of the event.
+- location: The location of the event.
+- duration: The duration of the event.
 
 ### Error Handling
 
