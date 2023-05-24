@@ -1,6 +1,6 @@
 # Google Calendar Event Fetcher
 
-A simple JavaScript library designed to simplify the process of fetching, parsing, and displaying events from Google Calendar using iCalendar (.ics) files.
+A simple JavaScript library designed to simplify the process of fetching, parsing, and displaying events from Google Calendar using the ical URL. 
 
 ## Overview
 
@@ -30,6 +30,8 @@ This project utilizes the [luxon](https://github.com/moment/luxon) library to co
 ## Usage guide
 
 Once you have included the library and it's dependencies in your project, you can start fetching and parsing calendar events using the provided class.
+
+The google calendar you want to use has to be public and the URL has to be the ical one. It can be found in the settings in Google Calendar.
 
 ### Installation
 
