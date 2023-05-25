@@ -143,7 +143,7 @@ const time = event.startDate.toFormat('HH:mm'); // Outputs '01:05'
 
 The library provides basic error handling for failed network requests or parsing errors. If an error occurs during the fetch or parsing process, an error will be thrown. It's recommended to implement custom error handling based on your specific requirements.
 
-##Troubleshooting
+## Troubleshooting
 
 ### CORS
 
