@@ -42,7 +42,7 @@ You can use the library by including it in your project using a script tag or us
 
 ### Module Bundler
 
-```html
+```js
 import GCalendarParser from '/path/to/g-calendar-parser.js';
 ```
 
