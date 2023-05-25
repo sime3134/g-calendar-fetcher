@@ -24,7 +24,8 @@ While using the Google Calendar API is typically preferable, there are situation
 - Fetching Google Calendar data in iCalendar (.ics) format from a given URL
 - Parsing iCalendar data into JavaScript objects
 - Providing a mechanism for custom display of Google Calendar events
-- Can separate past and upcoming events and diplay only a few or none of the past events.
+- Can separate past and upcoming events and display only a few or none of the past events.
+- Events are always sorted by start date, oldest event has index 0.
 
 ## Dependencies
 
