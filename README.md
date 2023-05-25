@@ -117,8 +117,8 @@ fetchAndDisplayEvents();
 
 The GCalendarParser constructor accepts an options object with the following properties:
 
-url (required): The URL of the Google Calendar iCal feed.
-amountOfPastEvents: The number of past events to retrieve. Use -1 to retrieve all events. 
+- `url` (required): The URL of the Google Calendar iCal feed.
+- `amountOfPastEvents` (required): The number of past events to retrieve. Use -1 to retrieve all events.
 
 ### Returned Events
 
