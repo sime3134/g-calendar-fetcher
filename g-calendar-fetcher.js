@@ -1,3 +1,24 @@
+class FetchError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'FetchError';
+    }
+}
+
+class ParseError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ParseError';
+    }
+}
+
+class CreationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'CreationError';
+    }
+}
+
 class GCalendarParser {
     constructor(options) {
         this.url = options.url;
@@ -5,52 +26,53 @@ class GCalendarParser {
     }
 
     async fetchEvents() {
-        try {
-            const response = await fetch(this.url);
+        const response = await fetch(this.url);
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch calendar events. Please check the URL or CORS errors.')
-            }
-
-            const icsData = await response.text();
-            return this.parseIcsData(icsData);
-        }catch(e) {
-            console.error(e);
+        if (!response.ok) {
+            throw new FetchError('Failed to fetch calendar events. Status: ${response.status}. Please check the URL or CORS errors.');
         }
+
+        const icsData = await response.text();
+        return this.parseIcsData(icsData);
     }
 
     parseIcsData(icsData) {
-        const jcalData = ICAL.parse(icsData);
-        const comp = new ICAL.Component(jcalData);
-        const vevents = comp.getAllSubcomponents('vevent');
-        const DateTime = luxon.DateTime;
+        try {
+            const jcalData = ICAL.parse(icsData);
+            const comp = new ICAL.Component(jcalData);
+            const vevents = comp.getAllSubcomponents('vevent');
+            const DateTime = luxon.DateTime;
 
-        const events = vevents.map(vevent => { return this.createEvent(vevent, DateTime) });
-        if(this.amountOfPastEvents === -1) {
-            return events.sort((a, b) => a.startDate - b.startDate);
+            const events = vevents.map(vevent => { return this.createEvent(vevent, DateTime) });
+            if(this.amountOfPastEvents === -1) {
+                return events.sort((a, b) => a.startDate - b.startDate);
+            }
+
+            const pastEvents = events.filter(event => event.endDate < DateTime.now()).sort((a, b) => b.endDate - a.endDate).slice(0, this.amountOfPastEvents);
+            const futureEvents = events.filter(event => event.endDate >= DateTime.now());
+
+            return [...pastEvents, ...futureEvents].sort((a, b) => a.startDate - b.startDate);
+        } catch(e) {
+            throw new ParseError('Error parsing ICS data. The data might be malformed or corrupted. Error: ' + e);
         }
-
-        const pastEvents = events.filter(event => event.endDate < DateTime.now()).sort((a, b) => b.endDate - a.endDate).slice(0, this.amountOfPastEvents);
-        const futureEvents = events.filter(event => event.endDate >= DateTime.now());
-
-        return [...pastEvents, ...futureEvents].sort((a, b) => a.startDate - b.startDate);
     }
 
     createEvent(vevent, DateTime) {
         try {
             let event = new ICAL.Event(vevent);
+            let endDate = DateTime.fromJSDate(event.endDate.toJSDate());
             event = {
                 startDate: DateTime.fromJSDate(event.startDate.toJSDate()),
-                endDate: DateTime.fromJSDate(event.endDate.toJSDate()),
+                endDate: endDate,
                 summary: event.summary,
                 description: event.description,
                 location: event.location,
                 duration: event.duration,
+                isPast: endDate < DateTime.now(),
             };
             return event;
         }catch(e) {
-            console.error('Error parsing event', e);
-            return null;
+            throw new CreationError('Error creating event. Error: ' + e);
         }
     }
 }
