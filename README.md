@@ -52,7 +52,7 @@ import GCalendarParser from '/path/to/g-calendar-parser.js';
 
 Once you have included the library and it's dependencies in your project, you can start fetching and parsing calendar events using the provided class.
 
-The google calendar you want to use has to be public and the URL has to be the ical one. It can be found in the settings in Google Calendar.
+The Google calendar you want to use has to be public and the URL has to be the ical one. It can be found in the settings in Google Calendar.
 
 Create a new instance of GCalendarParser with the desired options, and then use its methods to fetch and display the calendar events.
 
@@ -147,7 +147,7 @@ The library provides basic error handling for failed network requests or parsing
 
 ### CORS
 
-To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like [cors-anywhere](https://github.com/Rob--W/cors-anywhere) as a workaround if necessary.
+To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like [cors-anywhere](https://github.com/Rob--W/cors-anywhere) as a workaround if necessary. This is usually required with Google Calendar.
 
 ## Contributions
 
