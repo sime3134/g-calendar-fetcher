@@ -1,8 +1,19 @@
-# Google Calendar Event Fetcher
+# g-calendar-fetcher
 
-A simple JavaScript library designed to simplify the process of fetching, parsing, and displaying events from Google Calendar using the ical URL. 
+This JavaScript library helps you to easily fetch, parse, and display events from Google Calendar using the iCalendar (.ics) format available from a given Google Calendar URL.
 
-## Overview
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [Contributions](#contributions)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
+
+## Description
 
 Google Calendar Event Fetcher provides a streamlined and intuitive interface for fetching iCalendar data from a Google Calendar URL. It parses the fetched data, transforming it into JavaScript objects for easy manipulation. The library is tailored for Google Calendar data but should work with other iCalendar files as well.
 
@@ -19,37 +30,27 @@ While using the Google Calendar API is typically preferable, there are situation
 - [ical.js](https://github.com/mozilla-comm/ical.js): Required for parsing the iCalendar data into JavaScript objects.
 - [luxon](https://github.com/moment/luxon): Required for comparing dates and times.
 
-Note: Depending on the environment, you might run into CORS (Cross-Origin Resource Sharing) errors when fetching the iCalendar data. If you do encounter these issues, you can utilize [CORS Anywhere](https://github.com/Rob--W/cors-anywhere), a Node.js proxy which adds CORS headers to the proxied request.
+## Installation
 
-## Acknowledgements
+You can use the library by including it in your project using a script tag or using a module bundler like Webpack.
 
-This project utilizes the [ical.js](https://github.com/mozilla-comm/ical.js) library to parse iCalendar data. ical.js is distributed under the [Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/).
+### Script tag
 
-This project utilizes the [luxon](https://github.com/moment/luxon) library to compare date and time. luxon is distributed under the [MIT License](https://github.com/moment/luxon/blob/master/LICENSE.md).
+```html
+<script src="path/to/g-calendar-parser.js"></script>
+```
 
-## Usage guide
+### Module Bundler
+
+```html
+import GCalendarParser from '/path/to/g-calendar-parser.js';
+```
+
+## Usage
 
 Once you have included the library and it's dependencies in your project, you can start fetching and parsing calendar events using the provided class.
 
 The google calendar you want to use has to be public and the URL has to be the ical one. It can be found in the settings in Google Calendar.
-
-### Installation
-
-You can use the library by including it in your project using a script tag or using a module bundler like Webpack.
-
-#### Script tag
-
-```js
-<script src="path/to/g-calendar-parser.js"></script>
-```
-
-#### Module Bundler
-
-```js
-import GCalendarParser from '/path/to/g-calendar-parser.js';
-```
-
-### Usage
 
 Create a new instance of GCalendarParser with the desired options, and then use its methods to fetch and display the calendar events.
 
@@ -75,14 +76,14 @@ parser.fetchEvents()
   });
 ```
 
-#### Options
+### Options
 
 The GCalendarParser constructor accepts an options object with the following properties:
 
 url (required): The URL of the Google Calendar iCal feed.
 amountOfPastEvents: The number of past events to retrieve. Use -1 to retrieve all events. 
 
-#### Returned Events
+### Returned Events
 
 The fetchEvents method returns a promise that resolves to an array of parsed calendar events. Each event object has the following properties:
 
@@ -97,7 +98,9 @@ The fetchEvents method returns a promise that resolves to an array of parsed cal
 
 The library provides basic error handling for failed network requests or parsing errors. If an error occurs during the fetch or parsing process, the error will be logged to the console. It's recommended to implement custom error handling based on your specific requirements.
 
-### Note on CORS
+##Troubleshooting
+
+### CORS
 
 To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like cors-anywhere as a workaround if necessary.
 
@@ -105,6 +108,12 @@ To successfully fetch calendar events, ensure that the iCal feed URL allows cros
 
 Contributions, bug reports, and feature requests are welcome! Feel free to submit issues or pull requests on the GitHub repository.
 
+## Acknowledgements
+
+This project utilizes the [ical.js](https://github.com/mozilla-comm/ical.js) library to parse iCalendar data. ical.js is distributed under the [Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/).
+
+This project utilizes the [luxon](https://github.com/moment/luxon) library to compare date and time. luxon is distributed under the [MIT License](https://github.com/moment/luxon/blob/master/LICENSE.md).
+
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE.md).
