@@ -56,6 +56,12 @@ The google calendar you want to use has to be public and the URL has to be the i
 
 Create a new instance of GCalendarParser with the desired options, and then use its methods to fetch and display the calendar events.
 
+The `fetchEvents` method is an asynchronous function and returns a Promise. This means that it doesn't block the execution of your code, allowing other operations to execute while the calendar events are being fetched and parsed. 
+
+The Promise resolves to an array of parsed calendar events once the operation is successful. If there is an error during the fetch or parse process, the Promise is rejected and the error can be caught and handled.
+
+### Example
+
 ```js
 // Create a new instance of GCalendarParser
 const parser = new GCalendarParser({
@@ -78,6 +84,35 @@ parser.fetchEvents()
   });
 ```
 
+OR
+
+```js
+async function fetchAndDisplayEvents() {
+  try {
+    // Create a new instance of GCalendarParser
+    const parser = new GCalendarParser({
+      url: 'https://your-google-calendar-ical-url.com',
+      amountOfPastEvents: 5, // Specify the number of past events to retrieve (-1 for all events)
+    });
+
+    // Fetch and parse the calendar events
+    const events = await parser.fetchEvents();
+
+    // Use the parsed events
+    console.log(events);
+    // Further processing or rendering
+    // ...
+  } catch (error) {
+    console.error('Error fetching or parsing calendar events:', error);
+    // Handle the error appropriately
+    // ...
+  }
+}
+
+// Call the function
+fetchAndDisplayEvents();
+```
+
 ### Options
 
 The GCalendarParser constructor accepts an options object with the following properties:
@@ -95,10 +130,18 @@ The fetchEvents method returns a promise that resolves to an array of parsed cal
 - description: The description of the event.
 - location: The location of the event.
 - duration: The duration of the event.
+- isPast: If the event has passed the current local time.
+
+### Formatting Times
+Note that the times in the events are unpadded so 01:05 will be displayed as 1:5. To fix this, you can use the toFormat() method in Luxon. For example, toFormat('HH:mm') will display the time as 01:05.
+
+```js
+const time = event.startDate.toFormat('HH:mm'); // Outputs '01:05'
+```
 
 ### Error Handling
 
-The library provides basic error handling for failed network requests or parsing errors. If an error occurs during the fetch or parsing process, the error will be logged to the console. It's recommended to implement custom error handling based on your specific requirements.
+The library provides basic error handling for failed network requests or parsing errors. If an error occurs during the fetch or parsing process, an error will be thrown. It's recommended to implement custom error handling based on your specific requirements.
 
 ##Troubleshooting
 
