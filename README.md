@@ -147,7 +147,7 @@ The library provides basic error handling for failed network requests or parsing
 
 ### CORS
 
-To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like cors-anywhere as a workaround if necessary.
+To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like [cors-anywhere](https://github.com/Rob--W/cors-anywhere) as a workaround if necessary.
 
 ## Contributions
 
