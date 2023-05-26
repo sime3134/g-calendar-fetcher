@@ -15,9 +15,9 @@ This JavaScript library helps you to easily fetch, parse, and display events fro
 
 ## Description
 
-Google Calendar Event Fetcher provides a streamlined and intuitive interface for fetching iCalendar data from a Google Calendar URL. It parses the fetched data, transforming it into JavaScript objects for easy manipulation. The library is tailored for Google Calendar data but should work with other iCalendar files as well.
+g-calendar-fetcher provides a streamlined and intuitive interface for fetching iCalendar data from a Google Calendar URL. It parses the fetched data, transforming it into JavaScript objects for easy manipulation. The library is tailored for Google Calendar data but should work with other iCalendar files as well.
 
-While using the Google Calendar API is typically preferable, there are situations where this may not be feasible, such as when there is no access to the server logic, or inability to securely hide your API key. In these cases, Google Calendar Event Fetcher offers a viable alternative for integrating Google Calendar functionality into your JavaScript applications.
+While using the Google Calendar API is typically preferable, there are situations where this may not be feasible, such as when there is no access to the server logic, or inability to securely hide your API key. In these cases, g-calendar-fetcher offers a viable alternative for integrating Google Calendar functionality into your JavaScript applications.
 
 ## Features
 
