@@ -69,6 +69,7 @@ class GCalendarParser {
                 location: event.location,
                 duration: event.duration,
                 isPast: endDate < DateTime.now(),
+                ics: vevent.toString()
             };
             return event;
         }catch(e) {
