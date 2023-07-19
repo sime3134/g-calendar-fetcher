@@ -131,6 +131,7 @@ The fetchEvents method returns a promise that resolves to an array of parsed cal
 - `location`: The location of the event.
 - `duration`: The duration of the event.
 - `isPast`: If the event has passed the current local time.
+- `ics`: The raw ics text data for the event.
 
 ### Formatting Times
 Note that the times in the events are unpadded so 01:05 will be displayed as 1:5. To fix this, you can use the toFormat() method in Luxon. For example, toFormat('HH:mm') will display the time as 01:05.
