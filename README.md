@@ -154,6 +154,10 @@ To successfully fetch calendar events, ensure that the iCal feed URL allows cros
 
 Contributions, bug reports, and feature requests are welcome! Feel free to submit issues or pull requests on the GitHub repository.
 
+## Creator
+
+Simon Jern ([https://simonjern.com](https://simonjern.com))
+
 ## Acknowledgements
 
 This project utilizes the [ical.js](https://github.com/mozilla-comm/ical.js) library to parse iCalendar data. ical.js is distributed under the [Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/).
