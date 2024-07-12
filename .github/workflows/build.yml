@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Archive dist
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: g-calendar-fetcher-minified
           path: dist/g-calendar-fetcher.min.js
