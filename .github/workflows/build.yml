@@ -40,22 +40,6 @@ jobs:
           name: g-calendar-fetcher-minified
           path: dist/g-calendar-fetcher.min.js
 
-      - name: Verify dist folder
-        run: |
-          ls -al dist  # List files in the dist folder to verify the build output
-
-      - name: Commit dist files to main
-        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
-        run: |
-          git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
-          git add dist/g-calendar-fetcher.min.js
-          git commit -m "Add minified file for version ${{ github.ref_name }}"
-          git fetch origin main  # Ensure the main branch is up-to-date
-          git checkout main  # Checkout the main branch
-          git pull origin main  # Pull latest changes
-          git push origin main  # Push changes to main
-
       - name: Create Release
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for tags
         id: create_release
@@ -83,3 +67,10 @@ jobs:
           asset_path: dist/g-calendar-fetcher.min.js
           asset_name: g-calendar-fetcher.min.js
           asset_content_type: application/javascript
+
+      - name: Publish to npm
+        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
+        run: |
+          npm publish --access public  # Publish to npm with public access
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Use the npm token for authentication
