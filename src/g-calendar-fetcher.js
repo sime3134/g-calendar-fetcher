@@ -60,7 +60,7 @@ class GCalendarFetcher {
         (event) => event.endDate >= DateTime.now()
       );
 
-      return [...pastEvents, ...futureEvents].sort(
+      return [...futureEvents, ...pastEvents].sort(
         (a, b) => a.startDate - b.startDate
       );
     } catch (e) {
