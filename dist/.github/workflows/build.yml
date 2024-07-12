@@ -1,0 +1,35 @@
+name: Build and Minify Library
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and minify
+        run: npm run build
+
+      - name: Archive dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: g-calendar-fetcher-minified
+          path: dist/g-calendar-fetcher.min.js
