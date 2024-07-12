@@ -5,7 +5,7 @@ module.exports = {
   entry: ".src/g-calendar-fetcher.js",
   output: {
     filename: "g-calendar-fetcher.min.js",
-    path: resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist"),
     library: "GCalendarFetcher",
     libraryTarget: "umd",
     globalObject: "this",
