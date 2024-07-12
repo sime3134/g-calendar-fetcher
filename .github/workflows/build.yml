@@ -40,6 +40,10 @@ jobs:
           name: g-calendar-fetcher-minified
           path: dist/g-calendar-fetcher.min.js
 
+      - name: Verify dist folder
+        run: |
+          ls -al dist  # List files in the dist folder to verify the build output
+
       - name: Commit dist files to main
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
         run: |
