@@ -14,10 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write # To create releases and upload release assets
-      actions: write # To create release with the `create-release` action
-      id-token: write # To get `GITHUB_TOKEN` access for NPM publishing
+    permissions: write-all
 
     steps:
       - name: Checkout code
