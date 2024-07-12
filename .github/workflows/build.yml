@@ -75,7 +75,6 @@ jobs:
 
       - name: Publish to npm
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
-        run: |
-          npm publish --access public  # Publish to npm with public access
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Use the npm token for authentication
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
