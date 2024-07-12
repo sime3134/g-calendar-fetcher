@@ -68,11 +68,6 @@ jobs:
           asset_name: g-calendar-fetcher.min.js
           asset_content_type: application/javascript
 
-      - name: Authenticate with npm
-        run: npm whoami # This command ensures npm is properly authenticated
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Ensure the npm token is set in the environment
-
       - name: Publish to npm
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
         uses: JS-DevTools/npm-publish@v3
