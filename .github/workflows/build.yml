@@ -40,6 +40,15 @@ jobs:
           name: g-calendar-fetcher-minified
           path: dist/g-calendar-fetcher.min.js
 
+      - name: Commit dist files to main
+        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add dist/g-calendar-fetcher.min.js
+          git commit -m "Add minified file for version ${{ github.ref_name }}"
+          git push origin main
+
       - name: Create Release
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for tags
         id: create_release
@@ -52,7 +61,7 @@ jobs:
           draft: false
           prerelease: false
           body: |
-            Release of version ${{ github.ref }}
+            Release of version ${{ github.ref_name }}
 
             ## Breaking changes
             - **[v0.4.0]** Events are now sorted the other way around. Future events are now at the top.
