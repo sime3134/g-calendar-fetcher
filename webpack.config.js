@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import TerserPlugin from "terser-webpack-plugin";
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 export const entry = ".src/g-calendar-fetcher.js";
 export const output = {
