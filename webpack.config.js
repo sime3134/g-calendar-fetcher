@@ -2,7 +2,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: ".src/g-calendar-fetcher.js",
+  entry: "./src/g-calendar-fetcher.js",
   output: {
     filename: "g-calendar-fetcher.min.js",
     path: path.resolve(__dirname, "dist"),
