@@ -10,7 +10,7 @@
   },
   "name": "g-calendar-fetcher",
   "description": "This JavaScript library helps you to easily fetch, parse, and display events from Google Calendar using the iCalendar (.ics) format available from a given Google Calendar URL.",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "./dist/g-calendar-fetcher.min.js",
   "module": "./dist/g-calendar-fetcher.min.js",
   "type": "module",
