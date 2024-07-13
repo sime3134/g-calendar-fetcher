@@ -16,6 +16,7 @@
   "exports": {
     ".": "./dist/g-calendar-fetcher.min.js"
   },
+  "type": "module",
   "scripts": {
     "build": "webpack --mode production",
     "prepublishOnly": "npm run build",
