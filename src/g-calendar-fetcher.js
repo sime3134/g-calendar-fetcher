@@ -68,7 +68,7 @@ export default class GCalendarFetcher {
       );
 
       return [...futureEvents, ...pastEvents].sort(
-        (a, b) => a.startDate - b.startDate
+        (a, b) => b.startDate - a.startDate
       );
     } catch (e) {
       throw new ParseError(
