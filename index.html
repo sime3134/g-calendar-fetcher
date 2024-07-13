@@ -9,7 +9,20 @@
     <script type="module">
       import GCalendarFetcher from "./dist/g-calendar-fetcher.min.js";
 
+      const parser = new GCalendarFetcher({
+        url: "test_url",
+        amountOfPastEvents: 2,
+      });
+
+      try {
+        const events = await parser.fetchEvents();
+        console.log(events);
+      } catch (e) {
+        console.log(e);
+      }
+
       console.log(GCalendarFetcher); // Should log the GCalendarFetcher class
     </script>
+    <script src="luxon.min.js"></script>
   </body>
 </html>

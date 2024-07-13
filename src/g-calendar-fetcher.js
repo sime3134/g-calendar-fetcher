@@ -23,7 +23,7 @@ export default class GCalendarFetcher {
   constructor(options) {
     this.url = options.url;
     this.amountOfPastEvents = options.amountOfPastEvents;
-    this.dateTime = DateTime;
+    this.dateTime = luxon.DateTime;
   }
 
   async fetchEvents() {
