@@ -52,14 +52,15 @@ New - It's now also available on npm.
 
 ### Module Bundler
 
-````js
+```js
 import GCalendarParser from "/path/to/g-calendar-parser.js";
+```
 
 ### npm
 
 ```bash
 npm install g-calendar-fetcher
-````
+```
 
 ## Usage
 
