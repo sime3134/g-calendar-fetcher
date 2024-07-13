@@ -6,12 +6,10 @@ module.exports = {
   output: {
     filename: "g-calendar-fetcher.min.js",
     path: path.resolve(__dirname, "dist"),
-    library: "GCalendarFetcher",
-    libraryTarget: "umd",
-    globalObject: "this",
+    libraryTarget: "module",
   },
-  externals: {
-    ical: "ICAL",
+  experiments: {
+    outputModule: true,
   },
   resolve: {
     alias: {
@@ -29,6 +27,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-runtime"],
           },
         },
       },

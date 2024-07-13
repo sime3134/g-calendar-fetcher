@@ -19,7 +19,7 @@ export class CreationError extends Error {
   }
 }
 
-class GCalendarFetcher {
+export default class GCalendarFetcher {
   constructor(options) {
     this.url = options.url;
     this.amountOfPastEvents = options.amountOfPastEvents;
@@ -96,5 +96,3 @@ class GCalendarFetcher {
     }
   }
 }
-
-export default GCalendarFetcher;
