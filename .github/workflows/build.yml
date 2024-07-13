@@ -55,7 +55,9 @@ jobs:
             Release of version ${{ github.ref_name }}
 
             ## Breaking changes
-            - **[v0.4.0]** Events are now sorted the other way around. Future events are now at the top.
+              **[v0.4.0]** 
+              - Events are now sorted the other way around. Future events are now at the top.
+              - ical.js is now bundled with the library. You no longer need to include it separately.
 
       - name: Upload Minified Library to Release
         if: startsWith(github.event.ref, 'refs/tags/v') # Only run for tags

@@ -1,3 +1,5 @@
+import ICAL from "ical.js";
+
 class FetchError extends Error {
   constructor(message) {
     super(message);
