@@ -1,6 +1,3 @@
-import ICAL from "ical.js";
-import { DateTime } from "luxon";
-
 export class FetchError extends Error {
   constructor(message) {
     super(message);

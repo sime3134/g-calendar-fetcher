@@ -10,6 +10,15 @@ module.exports = {
     libraryTarget: "umd",
     globalObject: "this",
   },
+  externals: {
+    ical: "ICAL",
+  },
+  resolve: {
+    alias: {
+      "ical.js": path.resolve(__dirname, "node_modules/ical.js/build/ical.js"),
+    },
+    extensions: [".js"],
+  },
   mode: "production",
   module: {
     rules: [
