@@ -63,13 +63,11 @@ export default class GCalendarFetcher {
         .filter((event) => event.endDate < this.dateTime.now())
         .sort((a, b) => b.endDate - a.endDate)
         .slice(0, this.amountOfPastEvents);
-      const futureEvents = events.filter(
-        (event) => event.endDate >= this.dateTime.now()
-      );
+      const futureEvents = events
+        .filter((event) => event.endDate >= this.dateTime.now())
+        .sort((a, b) => a.startDate - b.startDate);
 
-      return [...futureEvents, ...pastEvents].sort(
-        (a, b) => b.startDate - a.startDate
-      );
+      return [...futureEvents, ...pastEvents];
     } catch (e) {
       throw new ParseError(
         "Error parsing ICS data. The data might be malformed or corrupted. Error: " +
