@@ -33,6 +33,7 @@ While using the Google Calendar API is typically preferable, there are situation
 ### Bundled Dependencies
 
 - [ical.js](https://github.com/mozilla-comm/ical.js): Required for parsing the iCalendar data into JavaScript objects.
+- [@babel/runtime](https://babeljs.io/docs/en/babel-runtime): Required for using Babel's runtime features, such as async/await.
 
 ### Peer Dependencies
 
@@ -166,9 +167,10 @@ The library provides basic error handling for failed network requests or parsing
 
 To successfully fetch calendar events, ensure that the iCal feed URL allows cross-origin requests or configure CORS headers on the server. CORS errors may occur if the iCal feed URL restricts access. You can use a CORS proxy like [cors-anywhere](https://github.com/Rob--W/cors-anywhere) as a workaround if necessary. This is usually required with Google Calendar.
 
-If using shared hosting on for example Hostinger, a nice workaround is to setup a cronjob in the hosting provider, to download the ICS file to your file storage, with the ICS URL. Most hosting providers provide some storage space that you can download it to (same space as where you are hosting your website). You can then use g-calendar-fetcher to fetch the ICS file from your storage. 
+If using shared hosting on for example Hostinger, a nice workaround is to setup a cronjob in the hosting provider, to download the ICS file to your file storage, with the ICS URL. Most hosting providers provide some storage space that you can download it to (same space as where you are hosting your website). You can then use g-calendar-fetcher to fetch the ICS file from your storage.
 
 Example shell command for cron job:
+
 ```sh
 # URL of the file to download
 FILE_URL="https://calendar.google.com/calendar/ical/some_id%40group.calendar.google.com/public/basic.ics"
@@ -186,7 +188,9 @@ else
   echo "Download failed"
 fi
 ```
+
 Example usage:
+
 ```js
 async function loadEvents() {
   const parser = new GCalendarFetcher({
