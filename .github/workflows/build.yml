@@ -2,8 +2,6 @@ name: Build and Minify Library
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*.*.*"
 
