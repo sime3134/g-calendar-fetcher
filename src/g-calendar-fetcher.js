@@ -1,4 +1,5 @@
 import ICAL from "ical.js";
+import { DateTime } from "luxon";
 
 export class FetchError extends Error {
   constructor(message) {
@@ -24,8 +25,8 @@ export class CreationError extends Error {
 export default class GCalendarFetcher {
   constructor(options) {
     this.url = options.url;
-    this.amountOfPastEvents = options.amountOfPastEvents;
-    this.dateTime = luxon.DateTime;
+    this.amountOfPastEvents = options.amountOfPastEvents ?? -1;
+    this.dateTime = DateTime;
   }
 
   async fetchEvents() {
@@ -55,17 +56,19 @@ export default class GCalendarFetcher {
       const events = vevents.map((vevent) => {
         return this.createEvent(vevent);
       });
-      if (this.amountOfPastEvents === -1) {
-        return events.sort((a, b) => a.startDate - b.startDate);
-      }
+      const now = this.dateTime.now().toUTC();
 
-      const pastEvents = events
-        .filter((event) => event.endDate < this.dateTime.now())
-        .sort((a, b) => b.endDate - a.endDate)
-        .slice(0, this.amountOfPastEvents);
+      let pastEvents = events
+        .filter((event) => event.endDate < now)
+        .sort((a, b) => b.endDate - a.endDate);
+
       const futureEvents = events
-        .filter((event) => event.endDate >= this.dateTime.now())
+        .filter((event) => event.endDate >= now)
         .sort((a, b) => a.startDate - b.startDate);
+
+      if (this.amountOfPastEvents !== -1) {
+        pastEvents = pastEvents.slice(0, this.amountOfPastEvents);
+      }
 
       return [...futureEvents, ...pastEvents];
     } catch (e) {
@@ -78,19 +81,27 @@ export default class GCalendarFetcher {
 
   createEvent(vevent) {
     try {
-      let event = new ICAL.Event(vevent);
-      let endDate = this.dateTime.fromJSDate(event.endDate.toJSDate());
-      event = {
-        startDate: this.dateTime.fromJSDate(event.startDate.toJSDate()),
-        endDate: endDate,
-        summary: event.summary,
-        description: event.description,
-        location: event.location,
-        duration: event.duration,
-        isPast: endDate < this.dateTime.now(),
+      const icalEvent = new ICAL.Event(vevent);
+
+      const startDate = this.dateTime.fromJSDate(
+        icalEvent.startDate.toJSDate(),
+        { zone: "utc" }
+      );
+
+      const endDate = this.dateTime.fromJSDate(icalEvent.endDate.toJSDate(), {
+        zone: "utc",
+      });
+
+      return {
+        startDate,
+        endDate,
+        summary: icalEvent.summary,
+        description: icalEvent.description,
+        location: icalEvent.location,
+        duration: icalEvent.duration,
+        isPast: endDate < this.dateTime.now().toUTC(),
         ics: vevent.toString(),
       };
-      return event;
     } catch (e) {
       throw new CreationError("Error creating event. Error: " + e);
     }

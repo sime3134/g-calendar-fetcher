@@ -1,6 +1,6 @@
 # g-calendar-fetcher
 
-This JavaScript library helps you to easily fetch, parse, and display events from Google Calendar using the iCalendar (.ics) format available from a given Google Calendar URL.
+This JavaScript library helps you to easily fetch, parse, and display events from Google Calendar using the iCalendar (.ics) format available from a given Google Calendar URL. While it has only been tested with Google Calendar .ics files, it can most likely be used with .ics files from other sources well.
 
 ## Table of Contents
 
@@ -8,6 +8,7 @@ This JavaScript library helps you to easily fetch, parse, and display events fro
 - [Features](#features)
 - [Dependencies](#dependencies)
 - [Installation](#installation)
+- [Breaking Changes](#️-breaking-changes)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Contributions](#contributions)
@@ -34,16 +35,11 @@ While using the Google Calendar API is typically preferable, there are situation
 
 - [ical.js](https://github.com/mozilla-comm/ical.js): Required for parsing the iCalendar data into JavaScript objects.
 - [@babel/runtime](https://babeljs.io/docs/en/babel-runtime): Required for using Babel's runtime features, such as async/await.
-
-### Peer Dependencies
-
 - [luxon](https://github.com/moment/luxon): Required for comparing dates and times.
 
 ## Installation
 
 You can use the library by including it in your project using a script tag or using a module bundler like Webpack.
-
-New - It's now also available on npm.
 
 ### Script tag
 
@@ -63,9 +59,18 @@ import GCalendarParser from "/path/to/g-calendar-parser.js";
 npm install g-calendar-fetcher
 ```
 
+## ⚠️ Breaking Changes
+
+This project follows semantic versioning.
+
+Before upgrading to a new minor version, please review the
+[CHANGELOG](CHANGELOG.md) for any breaking changes.
+
+The changelog is available from version 0.7.0.
+
 ## Usage
 
-Once you have included the library and it's dependencies in your project, you can start fetching and parsing calendar events using the provided class.
+Once you have installed the library in your project, you can start fetching and parsing calendar events using the provided class.
 
 The Google calendar you want to use has to be public and the URL has to be the ical one. It can be found in the settings in Google Calendar.
 
@@ -133,23 +138,31 @@ fetchAndDisplayEvents();
 
 The GCalendarParser constructor accepts an options object with the following properties:
 
-- `url` (required): The URL of the Google Calendar iCal feed.
-- `amountOfPastEvents` (required): The number of past events to retrieve. Use -1 to retrieve all events.
+- `url` (required): The URL of the Google Calendar iCal feed. Can also be a file on your own server.
+- `amountOfPastEvents` (default: -1): The number of past events to retrieve. Use -1 to retrieve all events, 0 for none, or any positive integer for a specific amount.
 
 ### Returned Events
 
 The fetchEvents method returns a promise that resolves to an array of parsed calendar events. Each event object has the following properties:
 
-- `startDate`: The start date of the event (in the Luxon DateTime format).
-- `endDate`: The end date of the event (in the Luxon DateTime format).
+- `startDate`: The UTC start date of the event (in the Luxon DateTime format).
+- `endDate`: The UTC end date of the event (in the Luxon DateTime format).
 - `summary`: The summary or title of the event.
 - `description`: The description of the event.
 - `location`: The location of the event.
 - `duration`: The duration of the event.
-- `isPast`: If the event has passed the current local time.
+- `isPast`: If the event has passed the current time.
 - `ics`: The raw ics text data for the event.
 
+#### Ordering
+
+Events are first split into future and past events based on their UTC end time.
+Future events are ordered by start date (earliest first), followed by past events ordered by end date (most recent first).
+The events are then returned as one array.
+
 ### Formatting Times
+
+Time is always in UTC from version 0.7.0.
 
 Note that the times in the events are unpadded so 01:05 will be displayed as 1:5. To fix this, you can use the toFormat() method in Luxon. For example, toFormat('HH:mm') will display the time as 01:05.
 

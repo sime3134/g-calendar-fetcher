@@ -5,10 +5,7 @@ on:
     branches:
       - main
     tags:
-      - "v*"
-  release:
-    types:
-      - created
+      - "v*.*.*"
 
 jobs:
   build:
@@ -19,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -29,49 +26,24 @@ jobs:
           node-version: "20.x"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build and minify
         run: npm run build
 
       - name: Archive dist
         uses: actions/upload-artifact@v4
+        if: github.ref_type == 'tag'
         with:
           name: g-calendar-fetcher-minified
           path: dist/g-calendar-fetcher.min.js
 
       - name: Create Release
-        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for tags
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2.5.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
+          files: dist/g-calendar-fetcher.min.js
+          name: Release ${{ github.ref_name }}
+          draft: true
           prerelease: false
-          body: |
-            Release of version ${{ github.ref_name }}
-
-            ## Breaking changes
-              **[v0.4.0]** 
-              - Events are now sorted the other way around. Future events are now at the top.
-              - ical.js is now bundled with the library. You no longer need to include it separately.
-
-      - name: Upload Minified Library to Release
-        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for tags
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/g-calendar-fetcher.min.js
-          asset_name: g-calendar-fetcher.min.js
-          asset_content_type: application/javascript
-
-      - name: Publish to npm
-        if: startsWith(github.event.ref, 'refs/tags/v') # Only run for version tags
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+          body_path: CHANGELOG.md
+          token: ${{ secrets.GITHUB_TOKEN }}
